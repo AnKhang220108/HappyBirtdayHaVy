@@ -693,7 +693,6 @@ emojiButtons.forEach((button) => {
         renderMonth(calContainer, 2026, 6); // July (6)
     }
 });
-const postList = document.querySelector('.post-list');
 const posts = document.querySelectorAll('.post-item');
 
 const observer = new IntersectionObserver(
@@ -706,16 +705,15 @@ const observer = new IntersectionObserver(
     });
 },
 {
-    root: postList, /* quan trọng: dùng scroll container, không phải viewport */
-    threshold: [0.5]
+    threshold: [0.5],
+    rootMargin: '0px'
 });
 
 posts.forEach(post => observer.observe(post));
-
-const launchOverlay = document.getElementById('launch-overlay');
-if (launchOverlay) {
-    launchOverlay.addEventListener('click', () => {
-        launchOverlay.classList.add('hide');
-        document.querySelector('.app-container')?.classList.add('ready');
-    });
-}
+/* BỎ custom JS snap timer — CSS scroll-snap-type đã xử lý đủ tốt,
+   dùng thêm timer vừa gây delay vừa xung đột gây giật */
+launchOverlay.addEventListener('click', () => {
+    launchOverlay.classList.add('hide');
+    document.querySelector('.app-container')
+        ?.classList.add('ready');
+});

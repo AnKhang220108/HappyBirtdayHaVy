@@ -700,47 +700,19 @@ const observer = new IntersectionObserver(
     entries.forEach(entry => {
         entry.target.classList.toggle(
             'active-post',
-            entry.intersectionRatio > 0.65
+            entry.intersectionRatio >= 0.5
         );
     });
 },
 {
-    threshold: [0.65]
+    threshold: [0.5],
+    rootMargin: '0px'
 });
 
 posts.forEach(post => observer.observe(post));
-const feed = document.querySelector('.post-list');
-
-let snapTimer;
-
-feed.addEventListener('scroll', () => {
-    clearTimeout(snapTimer);
-
-    snapTimer = setTimeout(() => {
-        const posts = [...document.querySelectorAll('.post-item')];
-
-        let nearest = posts[0];
-        let minDistance = Infinity;
-
-        posts.forEach(post => {
-            const rect = post.getBoundingClientRect();
-
-            const centerDistance = Math.abs(
-                rect.top + rect.height / 2 - window.innerHeight / 2
-            );
-
-            if (centerDistance < minDistance) {
-                minDistance = centerDistance;
-                nearest = post;
-            }
-        });
-
-        nearest.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-        });
-    }, 60);
-});launchOverlay.addEventListener('click', () => {
+/* BỎ custom JS snap timer — CSS scroll-snap-type đã xử lý đủ tốt,
+   dùng thêm timer vừa gây delay vừa xung đột gây giật */
+launchOverlay.addEventListener('click', () => {
     launchOverlay.classList.add('hide');
     document.querySelector('.app-container')
         ?.classList.add('ready');

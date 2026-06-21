@@ -246,8 +246,8 @@ body {
 .post-item {
     width: 100%;
     max-width: 420px;
-    height: 100%;
-    min-height: 100%;
+    height: 100svh; /* chiều cao đúng viewport trên mobile */
+    flex-shrink: 0;
     scroll-snap-align: start;
     scroll-snap-stop: always;
     display: flex;
@@ -255,7 +255,6 @@ body {
     align-items: center;
     justify-content: center;
     padding-bottom: 120px;
-    contain: layout style;
 }
 
 .post-media {
@@ -2118,22 +2117,15 @@ body {
         height: 46px;
     }
 }.post-item {
-    opacity: .7;
-    transform: scale(.96);
-    filter: blur(2px);
-
-    transition:
-        transform .55s cubic-bezier(.22,1,.36,1),
-        opacity .55s cubic-bezier(.22,1,.36,1),
-        filter .55s cubic-bezier(.22,1,.36,1);
+    /* Chỉ dùng opacity - KHÔNG dùng blur/scale vì cực nặng GPU khi scroll 40 post */
+    opacity: .65;
+    transition: opacity .3s ease;
 }
 
 .post-item.active-post {
     opacity: 1;
-    transform: scale(1);
-    filter: blur(0);
 }.post-media img {
-    transition: transform .7s cubic-bezier(.22,1,.36,1);
+    transition: transform .5s cubic-bezier(.22,1,.36,1);
     will-change: transform;
 }
 
@@ -2141,12 +2133,12 @@ body {
     transform: scale(1.04);
 }.post-media {
     transition:
-        transform .55s cubic-bezier(.22,1,.36,1),
-        box-shadow .55s cubic-bezier(.22,1,.36,1);
+        transform .4s cubic-bezier(.22,1,.36,1),
+        box-shadow .4s cubic-bezier(.22,1,.36,1);
 }
 
 .post-item.active-post .post-media {
-    transform: translateY(-6px);
+    transform: translateY(-4px);
     box-shadow:
         0 20px 60px rgba(0,0,0,.45),
         0 0 30px rgba(255,215,0,.08);

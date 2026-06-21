@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locket Grid Menu</title>
+    <link rel="icon" type="image/jpeg" href="locket.jpg">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="launch-overlay" class="launch-overlay">
+        <div class="launch-locket">
+            <img class="launch-avatar" src="locket.jpg" alt="Avatar">
+        </div>
+    </div>
+
+    <div class="app-container">
+        <header class="top-bar">
+            <div class="top-left">
+                <button class="notif-btn" aria-label="Thông báo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 10.5h4l4-3v9l-4-3H3z"></path>
+                        <path d="M7 8.5l7-3.5v11l-7-3.5"></path>
+                        <path d="M16 9l3-1"></path>
+                        <path d="M16 13l3-1"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <div id="open-friends-overlay" class="audience-btn">
+                Mọi người 
+                <svg class="arrow-down" width="28" height="28" viewBox="-10 0 37 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+
+            <img id="profile-trigger" class="profile-pic" src="avt.jpg" alt="Theo">
+        </header>
+
+        <div id="music-overlay" class="modal-overlay">
+            <div class="modal-box music-box">
+                <div class="music-header">
+                    <button class="close-btn" id="close-music">×</button>
+                </div>
+                <div class="music-disc">
+                    <img id="music-cover" src="avt.jpg" alt="Cover">
+                </div>
+                <div class="music-info">
+                    <h3 id="music-title">Hóa Ra</h3>
+                    <p id="music-artist">Playlist của tôi</p>
+                </div>
+                <audio id="music-player" preload="metadata">
+                    <source id="music-source" src="" type="audio/mpeg">
+                    Trình duyệt của bạn không hỗ trợ audio.
+                </audio>
+                <div class="music-controls">
+                    <div class="music-progress">
+                        <span id="music-time" class="music-time">0:00</span>
+                        <input type="range" id="music-seek" class="music-seek" min="0" max="100" value="0">
+                        <span id="music-duration" class="music-duration">0:00</span>
+                    </div>
+                    <div class="music-buttons">
+                        <button id="music-prev" class="music-btn">⏮</button>
+                        <button id="music-play" class="music-btn play-btn">▶</button>
+                        <button id="music-next" class="music-btn">⏭</button>
+                    </div>
+                </div>
+                <div id="music-list" class="music-list"></div>
+            </div>
+        </div>
+
+        <section id="friends-overlay" class="friends-overlay">
+            <div class="friends-handle"></div>
+
+            <div class="friends-header">
+                <h2>1 / 20 người bạn</h2>
+                <p>Thêm các bạn thân của bạn</p>
+            </div>
+
+            <button class="friend-search">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="11" cy="11" r="7"></circle>
+                    <path d="M20 20l-4.4-4.4"></path>
+                </svg>
+                <span>Thêm một người bạn mới</span>
+            </button>
+
+            <div class="friend-section-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="10" cy="10" r="6"></circle>
+                    <path d="M14.5 14.5L21 21"></path>
+                    <path d="M10 7v6"></path>
+                    <path d="M7 10h6"></path>
+                </svg>
+                <span>Find friends from other apps</span>
+            </div>
+
+            <div class="friend-apps">
+                <button class="friend-app">
+                    <span class="friend-app-icon messenger">
+                        <img src="messenger.webp" alt="Messenger">
+                    </span>
+                    <span>Messenger</span>
+                </button>
+                <button class="friend-app">
+                    <span class="friend-app-icon insta">
+                        <img src="Instagram.svg" alt="Instagram">
+                    </span>
+                    <span>Insta</span>
+                </button>
+                <button class="friend-app">
+                    <span class="friend-app-icon sms">
+                        <img src="sms.jpg" alt="SMS">
+                    </span>
+                    <span>Tin nhắn</span>
+                </button>
+                <button class="friend-app">
+                    <span class="friend-app-icon other">↗</span>
+                    <span>Khác</span>
+                </button>
+            </div>
+
+            <div class="friend-section-title your-friends-title">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M8.8 11.2a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm8.2.2a3.3 3.3 0 1 0 0-6.6 3.3 3.3 0 0 0 0 6.6ZM8.8 13c-3.9 0-7 2.1-7 4.8v1.4h13.9v-1.4c0-2.7-3.1-4.8-6.9-4.8Zm8.2.1c-.8 0-1.6.1-2.3.4 1.6 1.1 2.6 2.6 2.6 4.3v1.4h5v-1.1c0-2.8-2.4-5-5.3-5Z"></path>
+                </svg>
+                <span>Bạn bè của bạn</span>
+            </div>
+
+            <div class="friend-row">
+                <div class="friend-locket-avatar">
+                    <img src="theo.jpg" alt="Người luôn yêu em">
+                    <span>💛</span>
+                </div>
+                <div class="friend-row-copy">
+                    <strong>Người luôn yêu em</strong>
+                    <span>Người bạn duy nhất</span>
+                </div>
+                <button class="friend-remove" aria-label="Xóa bạn">×</button>
+            </div>
+
+            <div class="friends-empty-space"></div>
+        </section>
+
+        <main class="post-list">
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?q=80&w=900&auto=format&fit=crop" alt="Sunset">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Hoàng hôn hôm nay</div>
+                </div>
+
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">4 ngày</div>
+                    </div>
+                </div>
+
+                <div class="post-footer">
+                    <div class="post-age"><span class="heart-icon">💛</span> 4 ngày</div>
+                </div>
+            </article>
+
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=900&auto=format&fit=crop" alt="Landscape">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Một buổi chiều nhẹ</div>
+                </div>
+
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">2 tuần</div>
+                    </div>
+                </div>
+
+                <div class="post-footer">
+
+                    <div class="post-age"><span class="heart-icon">💛</span> 2 tuần</div>
+                </div>
+            </article>
+
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=900&auto=format&fit=crop" alt="Photo">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Nhật ký cuối tuần</div>
+                </div>
+
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">1 tháng</div>
+                    </div>
+                </div>
+
+                <div class="post-footer">
+                    <div class="post-age"><span class="heart-icon">💛</span> 1 tháng</div>
+                </div>
+            </article>
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="theo.jpg" alt="Post 04">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Caption 04</div>
+                </div>
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">vừa xong</div>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="post-age"><span class="heart-icon">💛</span> vừa xong</div>
+                </div>
+            </article>
+
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="theo.jpg" alt="Post 05">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Caption 05</div>
+                </div>
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">vừa xong</div>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="post-age"><span class="heart-icon">💛</span> vừa xong</div>
+                </div>
+            </article>
+
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="theo.jpg" alt="Post 06">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Caption 06</div>
+                </div>
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">vừa xong</div>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="post-age"><span class="heart-icon">💛</span> vừa xong</div>
+                </div>
+            </article>
+
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="theo.jpg" alt="Post 07">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Caption 07</div>
+                </div>
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">vừa xong</div>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="post-age"><span class="heart-icon">💛</span> vừa xong</div>
+                </div>
+            </article>
+
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="theo.jpg" alt="Post 08">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Caption 08</div>
+                </div>
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">vừa xong</div>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="post-age"><span class="heart-icon">💛</span> vừa xong</div>
+                </div>
+            </article>
+
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="theo.jpg" alt="Post 09">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Caption 09</div>
+                </div>
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">vừa xong</div>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="post-age"><span class="heart-icon">💛</span> vừa xong</div>
+                </div>
+            </article>
+
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="theo.jpg" alt="Post 10">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Caption 10</div>
+                </div>
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">vừa xong</div>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="post-age"><span class="heart-icon">💛</span> vừa xong</div>
+                </div>
+            </article>
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="theo.jpg" alt="Post 11">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Caption 11</div>
+                </div>
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">vừa xong</div>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="post-age"><span class="heart-icon">💛</span> vừa xong</div>
+                </div>
+            </article>
+
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="theo.jpg" alt="Post 12">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Caption 12</div>
+                </div>
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">vừa xong</div>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="post-age"><span class="heart-icon">💛</span> vừa xong</div>
+                </div>
+            </article>
+
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="theo.jpg" alt="Post 13">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Caption 13</div>
+                </div>
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">vừa xong</div>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="post-age"><span class="heart-icon">💛</span> vừa xong</div>
+                </div>
+            </article>
+
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="theo.jpg" alt="Post 14">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Caption 14</div>
+                </div>
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">vừa xong</div>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="post-age"><span class="heart-icon">💛</span> vừa xong</div>
+                </div>
+            </article>
+
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="theo.jpg" alt="Post 15">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Caption 15</div>
+                </div>
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">vừa xong</div>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="post-age"><span class="heart-icon">💛</span> vừa xong</div>
+                </div>
+            </article>
+
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="theo.jpg" alt="Post 16">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Caption 16</div>
+                </div>
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">vừa xong</div>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="post-age"><span class="heart-icon">💛</span> vừa xong</div>
+                </div>
+            </article>
+
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="theo.jpg" alt="Post 17">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Caption 17</div>
+                </div>
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">vừa xong</div>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="post-age"><span class="heart-icon">💛</span> vừa xong</div>
+                </div>
+            </article>
+
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="theo.jpg" alt="Post 18">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Caption 18</div>
+                </div>
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">vừa xong</div>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="post-age"><span class="heart-icon">💛</span> vừa xong</div>
+                </div>
+            </article>
+
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="theo.jpg" alt="Post 19">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Caption 19</div>
+                </div>
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">vừa xong</div>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="post-age"><span class="heart-icon">💛</span> vừa xong</div>
+                </div>
+            </article>
+
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="theo.jpg" alt="Post 20">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Caption 20</div>
+                </div>
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">vừa xong</div>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="post-age"><span class="heart-icon">💛</span> vừa xong</div>
+                </div>
+            </article>
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="theo.jpg" alt="Post 21">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Caption 21</div>
+                </div>
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">vừa xong</div>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="post-age"><span class="heart-icon">💛</span> vừa xong</div>
+                </div>
+            </article>
+
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="theo.jpg" alt="Post 22">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Caption 22</div>
+                </div>
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">vừa xong</div>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="post-age"><span class="heart-icon">💛</span> vừa xong</div>
+                </div>
+            </article>
+
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="theo.jpg" alt="Post 23">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Caption 23</div>
+                </div>
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">vừa xong</div>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="post-age"><span class="heart-icon">💛</span> vừa xong</div>
+                </div>
+            </article>
+
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="theo.jpg" alt="Post 24">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Caption 24</div>
+                </div>
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">vừa xong</div>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="post-age"><span class="heart-icon">💛</span> vừa xong</div>
+                </div>
+            </article>
+
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="theo.jpg" alt="Post 25">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Caption 25</div>
+                </div>
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">vừa xong</div>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="post-age"><span class="heart-icon">💛</span> vừa xong</div>
+                </div>
+            </article>
+
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="theo.jpg" alt="Post 26">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Caption 26</div>
+                </div>
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">vừa xong</div>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="post-age"><span class="heart-icon">💛</span> vừa xong</div>
+                </div>
+            </article>
+
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="theo.jpg" alt="Post 27">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Caption 27</div>
+                </div>
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">vừa xong</div>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="post-age"><span class="heart-icon">💛</span> vừa xong</div>
+                </div>
+            </article>
+
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="theo.jpg" alt="Post 28">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Caption 28</div>
+                </div>
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">vừa xong</div>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="post-age"><span class="heart-icon">💛</span> vừa xong</div>
+                </div>
+            </article>
+
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="theo.jpg" alt="Post 29">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Caption 29</div>
+                </div>
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">vừa xong</div>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="post-age"><span class="heart-icon">💛</span> vừa xong</div>
+                </div>
+            </article>
+
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="theo.jpg" alt="Post 30">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Caption 30</div>
+                </div>
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">vừa xong</div>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="post-age"><span class="heart-icon">💛</span> vừa xong</div>
+                </div>
+            </article>
+
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="theo.jpg" alt="Post 31">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Caption 31</div>
+                </div>
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">vừa xong</div>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="post-age"><span class="heart-icon">💛</span> vừa xong</div>
+                </div>
+            </article>
+
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="theo.jpg" alt="Post 32">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Caption 32</div>
+                </div>
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">vừa xong</div>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="post-age"><span class="heart-icon">💛</span> vừa xong</div>
+                </div>
+            </article>
+
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="theo.jpg" alt="Post 33">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Caption 33</div>
+                </div>
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">vừa xong</div>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="post-age"><span class="heart-icon">💛</span> vừa xong</div>
+                </div>
+            </article>
+
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="theo.jpg" alt="Post 34">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Caption 34</div>
+                </div>
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">vừa xong</div>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="post-age"><span class="heart-icon">💛</span> vừa xong</div>
+                </div>
+            </article>
+
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="theo.jpg" alt="Post 35">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Caption 35</div>
+                </div>
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">vừa xong</div>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="post-age"><span class="heart-icon">💛</span> vừa xong</div>
+                </div>
+            </article>
+
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="theo.jpg" alt="Post 36">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Caption 36</div>
+                </div>
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">vừa xong</div>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="post-age"><span class="heart-icon">💛</span> vừa xong</div>
+                </div>
+            </article>
+
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="theo.jpg" alt="Post 37">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Caption 37</div>
+                </div>
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">vừa xong</div>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="post-age"><span class="heart-icon">💛</span> vừa xong</div>
+                </div>
+            </article>
+
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="theo.jpg" alt="Post 38">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Caption 38</div>
+                </div>
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">vừa xong</div>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="post-age"><span class="heart-icon">💛</span> vừa xong</div>
+                </div>
+            </article>
+
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="theo.jpg" alt="Post 39">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Caption 39</div>
+                </div>
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">vừa xong</div>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="post-age"><span class="heart-icon">💛</span> vừa xong</div>
+                </div>
+            </article>
+
+            <article class="post-item">
+                <div class="post-media">
+                    <img src="theo.jpg" alt="Post 40">
+                    <button class="media-icon small-square" aria-hidden="true"></button>
+                    <div class="caption">Caption 40</div>
+                </div>
+                <div class="post-meta single-line">
+                    <img class="meta-avatar" src="theo.jpg" alt="Người luôn yêu em">
+                    <div class="meta-info">
+                        <div class="meta-name">Người luôn yêu em</div>
+                        <div class="meta-sub">vừa xong</div>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="post-age"><span class="heart-icon">💛</span> vừa xong</div>
+                </div>
+            </article>
+        </main>
+
+        <section id="post-grid-screen" class="post-grid-screen" aria-hidden="true">
+            <div id="post-grid-content" class="post-grid-content"></div>
+        </section>
+
+        <div class="message-panel">
+            <div class="message-box">
+                <input id="quick-message-input" type="text" placeholder="Gửi tin nhắn..." readonly>
+                <div class="message-icons">
+                    <button class="icon-btn">❤️</button>
+                    <button class="icon-btn">😂</button>
+                    <button class="icon-btn">👍</button>
+                </div>
+            </div>
+        </div>
+
+        <section id="chat-list-screen" class="chat-screen">
+            <div class="chat-list-header">
+                <h2>Trò chuyện</h2>
+                <img class="chat-user-avatar" src="theo.jpg" alt="Avatar">
+            </div>
+
+            <button id="open-friend-chat" class="friend-chat-item">
+                <img class="friend-avatar" src="theo.jpg" alt="Bạn bè">
+                <div class="friend-chat-copy">
+                    <strong>Người luôn yêu em</strong>
+                    <span>Happy Birthday người anh t...</span>
+                </div>
+                <div class="friend-chat-meta">
+                    <span>vừa xong</span>
+                    <span class="friend-arrow">›</span>
+                </div>
+            </button>
+
+            <button id="close-chat-list" class="chat-close-fab" aria-label="Đóng trò chuyện">×</button>
+        </section>
+
+        <section id="chat-detail-screen" class="chat-screen chat-detail-screen">
+            <div class="chat-detail-header">
+                <button id="back-to-chat-list" class="chat-back-btn" aria-label="Quay lại">‹</button>
+                <img class="friend-avatar small" src="theo.jpg" alt="Bạn bè">
+                <h2>Người luôn yêu em</h2>
+            </div>
+
+            <div id="chat-thread" class="chat-thread">
+                <div id="urgent-row" class="incoming-row urgent-row">
+                    <img class="friend-avatar tiny" src="theo.jpg" alt="Bạn bè">
+                    <div class="incoming-bubble urgent-bubble">⚠️ TIN KHẨN ⚠️</div>
+                </div>
+                <div id="typing-row" class="incoming-row typing-row">
+                    <img class="friend-avatar tiny" src="theo.jpg" alt="Bạn bè">
+                    <div class="typing-bubble">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-composer">
+                <input type="text" placeholder="Gửi tin nhắn...">
+                <button>🤣</button>
+                <button>💛</button>
+                <button>🔥</button>
+                <button class="composer-smile">☻</button>
+            </div>
+        </section>
+
+        <div class="floating-nav-container">
+            <div id="open-post-grid" class="nav-icon grid" title="Lưới ảnh">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="3" width="8" height="8" rx="2" ry="2"></rect><rect x="13" y="3" width="8" height="8" rx="2" ry="2"></rect><rect x="3" y="13" width="8" height="8" rx="2" ry="2"></rect><rect x="13" y="13" width="8" height="8" rx="2" ry="2"></rect></svg>
+            </div>
+
+            <nav class="floating-nav">
+                <div class="nav-icon" id="open-calendar">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><rect x="8" y="14" width="2" height="2" fill="white" stroke="none"></rect><rect x="12" y="14" width="2" height="2" fill="white" stroke="none"></rect><rect x="16" y="14" width="2" height="2" fill="white" stroke="none"></rect></svg>
+                </div>
+
+                <div class="camera-btn">
+                    <div class="camera-inner"></div>
+                </div>
+
+                <div id="open-chat-list" class="nav-icon chat-icon-wrapper">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M12 3c5.5 0 10 3.58 10 8s-4.5 8-10 8c-1.24 0-2.43-.18-3.53-.5C5.55 19.82 2.5 20.5 2.5 20.5c.67-1.74 1.14-3.32 1.14-3.32C2.33 15.5 1.5 13.84 1.5 12c0-4.42 4.5-8 10-8z"/></svg>
+                    <div class="notification-badge">5+</div>
+                </div>
+            </nav>
+
+            <div class="nav-icon share" title="Chia sẻ">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="16"></line></svg>
+            </div>
+        </div>
+        
+    <div id="memory-modal" class="modal-overlay">
+            <div class="modal-box">
+                <div class="modal-header">
+                    <h2>Kỷ niệm</h2>
+                    <span class="close-btn" id="close-modal">×</span>
+                </div>
+                
+                <div class="modal-body">
+                    <div id="calendars-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

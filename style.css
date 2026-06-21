@@ -89,7 +89,6 @@ body {
 .app-container {
     width: 100%;
     max-width: 450px; /* Chiều rộng chuẩn của điện thoại */
-    min height:100dvh;
     height: 100dvh;
     background: linear-gradient(180deg,#0a0a0a 0%, #1b0f06 45%, #000 100%);
     color: #fff;

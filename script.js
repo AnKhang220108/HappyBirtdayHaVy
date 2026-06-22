@@ -565,6 +565,8 @@ emojiButtons.forEach((button) => {
         if (musicDisc) {
             musicDisc.classList.toggle('is-playing', !musicPlayer.paused);
         }
+        musicPlayBtn.classList.toggle('is-playing', !musicPlayer.paused);
+        musicPlayBtn.setAttribute('aria-label', musicPlayer.paused ? 'Phát nhạc' : 'Tạm dừng');
     }
 
     if (musicPlayBtn) {

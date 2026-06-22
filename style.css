@@ -2176,7 +2176,51 @@ body {
 }.app-container.ready {
     transform: scale(1);
     opacity: 1;
-}:root {
-    --safe-top: env(safe-area-inset-top);
-    --safe-bottom: env(safe-area-inset-bottom);
+}
+:root {
+    --app-height: 100svh;
+    --topbar-height: 88px;
+    --bottom-controls-height: 218px;
+}
+.post-media {
+    width: min(calc(100% - 18px), 430px);
+    height: min(
+        calc((100vw - 18px) * 1.02),
+        calc(var(--app-height) - var(--topbar-height) - var(--bottom-controls-height) - 42px)
+    );
+}
+
+/* Move the phone layout lower */
+:root {
+    --content-down: 24px;
+}
+
+.post-list {
+    padding-top: calc(18px + var(--content-down));
+}
+
+.post-media {
+    margin-top: var(--content-down);
+}
+
+.message-panel {
+    bottom: calc(122px - 18px);
+}
+
+.floating-nav-container {
+    bottom: 8px;
+}
+
+@media (max-width: 420px) {
+    :root {
+        --content-down: 28px;
+    }
+
+    .message-panel {
+        bottom: 78px;
+    }
+
+    .floating-nav-container {
+        bottom: 4px;
+    }
 }

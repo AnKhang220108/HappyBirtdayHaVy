@@ -410,6 +410,13 @@ emojiButtons.forEach((button) => {
 
     const playlist = [
         {
+            title: 'Có Chắc Yêu Là Đây',
+            artist: 'Locket',
+            src: 'cochacyeuladay.mp3',
+            cover: 'theo.jpg'
+        },
+
+        {
             title: 'In The Middle',
             artist: 'Locket',
             src: 'Middle.mp3',
@@ -427,12 +434,7 @@ emojiButtons.forEach((button) => {
             src: 'yeuemnhu.mp3',
             cover: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=400&auto=format&fit=crop'
         },
-        {
-            title: 'Có Chắc Yêu Là Đây',
-            artist: 'Locket',
-            src: 'cochacyeuladay.mp3',
-            cover: 'theo.jpg'
-        },
+        
         {
             title: 'Hóa Ra',
             artist: 'Locket',

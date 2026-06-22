@@ -2236,7 +2236,7 @@ body {
 
 .music-box {
     width: min(88vw, 430px);
-    height: min(82svh, 760px);
+    height: min(88svh, 860px);
     padding: 34px 36px 38px;
     border-radius: 34px;
     background:
@@ -2248,12 +2248,12 @@ body {
 }
 
 .music-header {
-    height: 40px;
+    height: 8px;
 }
 
 .music-header .close-btn {
-    width: 42px;
-    height: 42px;
+    width: 2px;
+    height: 2px;
     color: rgba(255,255,255,0.58);
     font-size: 44px;
     line-height: 34px;
@@ -2293,14 +2293,14 @@ body {
 }
 
 .music-controls {
-    margin: 0 0 28px;
+    margin: 0 0 20px;
 }
 
 .music-progress {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px 0;
-    margin-bottom: 22px;
+    gap: 20px 0;
+    margin-bottom: 2px;
 }
 
 .music-seek {

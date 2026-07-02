@@ -716,11 +716,14 @@ posts.forEach(post => observer.observe(post));
 const feed = document.querySelector('.post-list');
 
 let snapTimer;
+let isUserScrolling = false;
 
 feed.addEventListener('scroll', () => {
+    isUserScrolling = true;
     clearTimeout(snapTimer);
 
     snapTimer = setTimeout(() => {
+        isUserScrolling = false;
         const posts = [...document.querySelectorAll('.post-item')];
 
         let nearest = posts[0];
@@ -739,12 +742,15 @@ feed.addEventListener('scroll', () => {
             }
         });
 
-        nearest.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-        });
-    }, 60);
-});launchOverlay.addEventListener('click', () => {
+        // Chỉ snap nếu post chưa đủ gần center (50px threshold)
+        if (minDistance > 50) {
+            nearest.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+        }
+    }, 150); // Tăng delay để tránh snap conflict
+}, { passive: true });launchOverlay.addEventListener('click', () => {
     launchOverlay.classList.add('hide');
     document.querySelector('.app-container')
         ?.classList.add('ready');

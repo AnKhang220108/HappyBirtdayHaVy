@@ -663,14 +663,15 @@ emojiButtons.forEach((button) => {
             grid.appendChild(empty);
         }
 
-        const today = new Date();
+        // Highlight ngày 9/7/2026 (sinh nhật)
+        const today = new Date(2026, 6, 9); // month 0-based: 6 = July
 
         for (let d = 1; d <= days; d++) {
             const cell = document.createElement('div');
             cell.className = 'cal-item';
             cell.textContent = d;
 
-            // highlight today if matches
+            // highlight if matches highlight date (9/7)
             if (today.getFullYear() === year && today.getMonth() === month && today.getDate() === d) {
                 cell.classList.add('today');
             }
@@ -696,6 +697,110 @@ emojiButtons.forEach((button) => {
         renderMonth(calContainer, 2026, 5); // June (5)
         renderMonth(calContainer, 2026, 6); // July (6)
     }
+
+    // =========================================
+    // HIỆU ỨNG "HAPPY BIRTHDAY" KHI BẤM NÚT CHỤP
+    // =========================================
+    const cameraBtn = document.querySelector('.camera-btn');
+    const BIRTHDAY_NAME = 'Hà Vy';
+    const CONFETTI_COLORS = ['#ffd700', '#ffffff', '#ff6b9d', '#4dd0e1', '#a78bfa', '#ffb020'];
+    const BALLOON_COLORS = ['#ff6b9d', '#4dd0e1', '#ffd700', '#a78bfa', '#ff9f43', '#69db7c'];
+
+    function triggerBirthdayEffect(name = BIRTHDAY_NAME) {
+        if (!cameraBtn) return;
+
+        // Tránh chồng nhiều hiệu ứng nếu bấm liên tục
+        document.querySelector('.birthday-burst-overlay')?.remove();
+
+        const rect = cameraBtn.getBoundingClientRect();
+        const originX = rect.left + rect.width / 2;
+        const originY = rect.top + rect.height / 2;
+
+        const overlay = document.createElement('div');
+        overlay.className = 'birthday-burst-overlay';
+        overlay.style.setProperty('--origin-x', `${originX}px`);
+        overlay.style.setProperty('--origin-y', `${originY}px`);
+
+        // Quầng sáng vàng
+        const glow = document.createElement('div');
+        glow.className = 'birthday-glow';
+        overlay.appendChild(glow);
+
+        // Vài tia sáng bắn lên với hướng lệch nhẹ khác nhau
+        for (let i = 0; i < 3; i++) {
+            const ray = document.createElement('div');
+            ray.className = 'birthday-ray';
+            const rayAngle = -12 + i * 12; // lệch trái/phải nhẹ
+            ray.style.transform = `translateX(-50%) rotate(${rayAngle}deg)`;
+            ray.style.animationDelay = `${i * 0.08}s`;
+            overlay.appendChild(ray);
+        }
+
+        // Chữ Happy Birthday [Tên]
+        const textWrap = document.createElement('div');
+        textWrap.className = 'birthday-text-wrap';
+        textWrap.innerHTML = `
+            <span class="birthday-text-line line-happy">Happy</span>
+            <span class="birthday-text-line line-birthday">Birthday</span>
+            <span class="birthday-text-line line-name">${name}</span>
+        `;
+        overlay.appendChild(textWrap);
+
+        // Confetti bắn tung tóe quanh nút
+        for (let i = 0; i < 46; i++) {
+            const piece = document.createElement('div');
+            piece.className = 'confetti-piece';
+            const angle = Math.random() * 360;
+            const distance = 140 + Math.random() * 260;
+            const dx = Math.cos((angle * Math.PI) / 180) * distance;
+            const dy = Math.sin((angle * Math.PI) / 180) * distance - 120; // thiên về phía trên
+            piece.style.setProperty('--dx', `${dx}px`);
+            piece.style.setProperty('--dy', `${dy}px`);
+            piece.style.setProperty('--rot', `${Math.random() * 720 - 360}deg`);
+            piece.style.background = CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)];
+            const size = 5 + Math.random() * 6;
+            piece.style.width = `${size}px`;
+            piece.style.height = `${size}px`;
+            piece.style.animationDelay = `${Math.random() * 0.15}s`;
+            overlay.appendChild(piece);
+        }
+
+        // Bóng bay bay lên
+        for (let i = 0; i < 7; i++) {
+            const balloon = document.createElement('div');
+            balloon.className = 'birthday-balloon';
+            const offsetX = (Math.random() - 0.5) * 260;
+            balloon.style.left = `${originX + offsetX}px`;
+            balloon.style.setProperty('--sway', `${(Math.random() - 0.5) * 80}px`);
+            balloon.style.background = BALLOON_COLORS[i % BALLOON_COLORS.length];
+            balloon.style.animationDelay = `${Math.random() * 0.5}s`;
+            balloon.style.animationDuration = `${3.2 + Math.random() * 1.4}s`;
+            overlay.appendChild(balloon);
+        }
+
+        // Ngôi sao lấp lánh rải rác
+        for (let i = 0; i < 12; i++) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'birthday-sparkle';
+            sparkle.style.left = `${originX + (Math.random() - 0.5) * 480}px`;
+            sparkle.style.top = `${originY + (Math.random() - 0.5) * 480 - 80}px`;
+            sparkle.style.animationDelay = `${Math.random() * 1.4}s`;
+            overlay.appendChild(sparkle);
+        }
+
+        document.body.appendChild(overlay);
+
+        // Cho phép tap để tắt sớm
+        overlay.addEventListener('click', () => overlay.remove());
+
+        // Tự động biến mất sau ~3.6s
+        setTimeout(() => {
+            overlay.classList.add('fade-out');
+            setTimeout(() => overlay.remove(), 600);
+        }, 3600);
+    }
+
+    cameraBtn?.addEventListener('click', () => triggerBirthdayEffect());
 });
 const posts = document.querySelectorAll('.post-item');
 
